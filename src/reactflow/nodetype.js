@@ -317,12 +317,12 @@ Setshow(!show)
   
 
  
-      
+      <div style={{visibility:"visible"}}>
  <Handle type="source" position={Position.Top}   id="a" />
        <Handle type="source" position={Position.Right}  id="b" />
       <Handle type="source" position={Position.Bottom}  id="c" /> 
       <Handle type="source" position={Position.Left}  style={{top:10}} id="d" />
-    
+      </div>
     </div>
    
   

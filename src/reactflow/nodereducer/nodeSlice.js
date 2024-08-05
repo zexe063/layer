@@ -1,7 +1,7 @@
 
 
 import {createAction, createSlice, createAsyncThunk, combineSlices} from "@reduxjs/toolkit"
-import intailnodes from "../intailnodes";
+// import intailnodes from "../intailnodes";
 import { act } from "react";
 import { MdChatBubbleOutline } from "react-icons/md";
 import axios from "axios";
@@ -161,7 +161,7 @@ export const NodeElementpopupClose = createAsyncThunk(
 const node = createSlice({
     name:"node",
     initialState:{
-        Nodes: intailnodes,
+        Nodes:[],
         Edges:[],
         NodeId: {},
         connectionType :"SmoothStep",

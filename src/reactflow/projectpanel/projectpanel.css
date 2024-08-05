@@ -1,0 +1,8 @@
+
+#project{
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    scrollbar-color: "black";
+
+}
