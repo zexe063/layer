@@ -19,6 +19,7 @@ import StarightFloatingEdges from './StarightFloatingEdges';
 import NodeElementpopup from './nodeElementpopup/nodeElementpopup';
 import ProjectPanel from './projectpanel/projectpanel';
 import dagre from "dagre"
+import { FaSearch, FaSlash } from 'react-icons/fa';
 
 
 
@@ -48,6 +49,13 @@ function Flow() {
 
 
 
+
+
+
+
+
+ 
+
   
 
 
@@ -59,27 +67,27 @@ function Flow() {
  let shechmafinalresult  = ''
   
 // here  the scehma agenerate 
-  const schema =  nodes.map((item) => {
+//   const schema =  nodes.map((item) => {
    
       
-    let value = ''
-    const schemaLable = item.data.label;
+//     let value = ''
+//     const schemaLable = item.data.label;
     
-const   datatype =  item.data.arr.forEach((nodeitem)=>{
-       value =  value  + 
-       `
-       ${nodeitem.key}: {type: ${nodeitem.value}},
-       `
+// const   datatype =  item.data.arr.forEach((nodeitem)=>{
+//        value =  value  + 
+//        `
+//        ${nodeitem.key}: {type: ${nodeitem.value}},
+//        `
       
-})   
+// })   
 
-const SchemaGenerate = `const ${schemaLable}Schema= new mongoose.schema{(
-   ${value}
-)}` 
+// const SchemaGenerate = `const ${schemaLable}Schema= new mongoose.schema{(
+//    ${value}
+// )}` 
 
-return SchemaGenerate;
+// return SchemaGenerate;
 
-  });
+//   });
 
   
 
@@ -125,10 +133,12 @@ const onNodesChange =  useCallback((changes)=>{
       flowedge=  "StraightEdge"
      }
 
+     
+     
    
      
      
-      const edge = addEdge({...params, type:flowedge,  style:{strokeWidth:1.5, stroke:"white" },}, edges);
+      const edge = addEdge({...params, type:flowedge, label:"true",style:{strokeWidth:1, stroke:"white" },},edges);
       dispatch(setEdges(edge))
            
     },
@@ -165,7 +175,7 @@ const onDrop = useCallback((event)=>{
     id:`${nodes.length+1}`,
     type:"custom",
     position: postion,
-    data:{id:`${nodes.length+1}`,NodeElementpopup:false, color:"#0073ff", label:`collection${nodes.length}` ,arr:[{key:"_id", value:"Objectid"}]},
+    data:{id:`${nodes.length+1}`,NodeElementpopup:false, show:true, color:"#0073ff", label:`collection${nodes.length}` ,arr:[{ id:"1", key:"_id", value:"ObjectId"}]},
     
   }
 
@@ -202,7 +212,7 @@ function move(event){
 
     
 <div>
-  {/* <ProjectPanel></ProjectPanel> */}
+  <ProjectPanel></ProjectPanel>
   </div>
   
 
@@ -213,25 +223,24 @@ function move(event){
     onNodesDelete={onNodesDelete}
       onConnect={onConnect} 
       connectionLineType={ConnectionLineType[Nodeedgetype]}
-    
+      onNodesChange={onNodesChange}
       nodes={nodes}
       edges={edges}
-   onNodesChange={onNodesChange}
+
         nodeTypes={nodeTypes}  
         edgeTypes={edgeTypes}
         connectionMode={ConnectionMode.Loose}
          connectionLineStyle={{strokeWidth:2, stroke:"white"}}
          onInit={setRfinstance}
-      
-       minZoom={0.5}
-      
+     fitView
+       minZoom={0}
+      elevateEdgesOnSelect
       onDragOver={onDragOver}
          onDrop={onDrop}
       
       
     
-        fitView
-         
+               
           >
           
       
@@ -239,7 +248,7 @@ function move(event){
 
        
         {/* <MiniMap></MiniMap> */}
-        {/* <Controls /> */}
+        <Controls />
         
       </ReactFlow>
       </div>

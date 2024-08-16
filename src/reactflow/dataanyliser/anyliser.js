@@ -1,20 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NodeDataColor, datashow } from "../nodereducer/nodeSlice";
+import { NodeDataColor, NodeElementHideRedux, datashow } from "../nodereducer/nodeSlice";
 import { useEffect, useState } from "react";
-import { AddNodeValue, DeleteNodeValue,NodeFieldValueUpdate} from "../nodereducer/nodeSlice";
-import {SketchPicker,CirclePicker} from "react-color"
+import { AddNodeValue, DeleteNodeValue,NodeFieldValueUpdate,  UpdateLabel, SchemaElementSuffle} from "../nodereducer/nodeSlice";
+import {SketchPicker,CirclePicker,TwitterPicker} from "react-color"
 import { MdDelete} from "react-icons/md";
 
 
 import "./alylisher.css"
+import { FaUmbraco } from "react-icons/fa";
+import { IoMdTennisball } from "react-icons/io";
 
 function Anyliser(){
 
-
     const Anylisershow = useSelector((state)=> state.nodes.Anyliser);
    
+   
     const dispatch = useDispatch()
-    const NewschemaNode = useSelector((state)=> state.nodes.NodeData)
+    const NewschemaNode = useSelector((state)=> state.nodes.NodeData);
+   
     
     let [color, setColor] = useState();
    
@@ -30,7 +33,7 @@ function Anyliser(){
   
    const [ObjData, setObjData] = useState();
    
- 
+ const [drag,setDrag]= useState();
 
 
 
@@ -40,9 +43,10 @@ function Anyliser(){
        
     }
 
-    function AddSubmit(id){
+    function AddSubmit(){
        
-   dispatch(AddNodeValue({nodeid:id.nodeid,  value:{ id: id.id+1,...ObjData }}));
+  //  dispatch(AddNodeValue({nodeid:id.nodeid,  value:{ id: id.id+1,...ObjData }}));
+  dispatch(AddNodeValue({value:{...ObjData }}))
 
 
     }
@@ -66,6 +70,49 @@ setColor(colorvalue.hex)
 dispatch(NodeFieldValueUpdate(data));
 
  }
+
+ function LabelChange(data){
+
+dispatch(UpdateLabel(data))
+  
+ }
+
+const SchemaElementDrag= (e,data)=>{
+  // e.stopPropagation();
+  // e.preventDefault();
+  setDrag(data);
+   
+  
+}
+
+const SchemaElementOver = (dataover)=>{
+
+const firstElement = NewschemaNode[0].data.arr.indexOf(drag);
+const secondElement = NewschemaNode[0].data.arr.indexOf(dataover);
+console.log(firstElement,secondElement)
+
+
+const result = NewschemaNode.map((item)=>{
+  const arr = item.data.arr;
+  const finalarr = [...arr];
+
+    // finalarr[firstElement] = item.data.arr[secondElement];
+    // finalarr[secondElement] = item.data.arr[firstElement];
+    finalarr[firstElement] = dataover;
+    finalarr[secondElement] = drag;
+   return finalarr;
+  
+})
+
+dispatch(SchemaElementSuffle(...result))
+
+
+
+
+
+}
+
+
    
    
     return(
@@ -79,8 +126,8 @@ dispatch(NodeFieldValueUpdate(data));
                           <div  className="flex flex-col justify-between items-center gap-2 p-2" key={i}>
   
                                 <div key={i} className="flex justify-between items-center">
-                                
-                                          <div>{item.data.label}</div>
+                           
+                                          <input defaultValue={item.data.label} onChange={(e)=>LabelChange(e.target.value)}></input>
                                           
                                           </div>
                                        
@@ -89,7 +136,7 @@ dispatch(NodeFieldValueUpdate(data));
                                   item.data.arr && item.data.arr.map((nodeitem)=>{    
                                  
                                        return(
-                                          <div key={nodeitem.id} className="flex w-full justify-evenly items-center gap-2 font-Open-Sans text-input_text_color font-[10px]">
+                                          <div key={nodeitem.id} className="flex w-full justify-evenly items-center gap-2 font-firo-mono text-input_text_color font-[10px]" draggable="true" onDragStart={(e)=>SchemaElementDrag(e,nodeitem)}onDrop={()=>SchemaElementOver(nodeitem)} onDragOver={(e)=>e.preventDefault()}>
   
                                          <input type="text" defaultValue={nodeitem.key}   className=" w-auto  bg-transparent border-[1px] border-solid  border-border_color  pl-1 text-[12px] focus:border-[1px] focus:border-solid focus:border-blue-800" onChange={(e)=>NodeFieldValue({Parentid:item.id,key:e.target.value,Childid:nodeitem.id})}></input>
                                       
@@ -97,7 +144,7 @@ dispatch(NodeFieldValueUpdate(data));
                                           <option value="String">{nodeitem.value}</option>
                                           <option value="Number">Number</option>
                                           <option value="Boolean">Boolean</option>
-                                          <option value="Array">Array</option>
+                                  <option value="Array">Array</option>
                                           <option value="Object">Object.id</option>
                                           <option>Timestamp</option>
                                           
@@ -113,7 +160,7 @@ dispatch(NodeFieldValueUpdate(data));
   
                                  <p className=" text-center font-Dam-sans ">NodeAdder</p>
   
-                             <div className=" flex w-full gap-2 justify-evenly items-center text-input_text_color font-Dam-sans">
+                             <div className=" flex w-full gap-2 justify-evenly items-center text-input_text_color font-firo-mono">
   
                               <input type="text" placeholder="key"  title="key" className=" w-auto bg-transparent border-[1px] border-solid border-border_color p-[1px] pl-1 text-[13px]"onChange={valuegenerate}></input>
                             
@@ -126,7 +173,9 @@ dispatch(NodeFieldValueUpdate(data));
                                           <option value="timestamp">Timestamp</option>
                                           
                                          </select>
-                                         <button className=" bg-blue-600 p-1 rounded-md text-white text-[12px]" onClick={()=>AddSubmit({nodeid:item.id, id:item.data.arr.length})}>Add</button>
+                                         {/* <button className=" bg-blue-600 p-1 rounded-md text-white text-[12px]" onClick={()=>AddSubmit({nodeid:item.id, id:item.data.arr.length})}>Add</button> */}
+
+                                         <button className=" bg-blue-600 p-1 rounded-md text-white text-[12px]" onClick={()=>AddSubmit()}>Add</button>
                                          
                              </div>
                              <div className=" bg-stone-500 w-full h-[2px] mt-3"></div>
@@ -137,7 +186,7 @@ dispatch(NodeFieldValueUpdate(data));
                               
   
                               <div>
-                                <CirclePicker onChange={colorchanager} onClick={colorvalue}></CirclePicker>
+                                <CirclePicker onChange={colorchanager} onClick={colorvalue} circleSpacing={14} circleSize={25}></CirclePicker>
                               </div>
   
                              </div>

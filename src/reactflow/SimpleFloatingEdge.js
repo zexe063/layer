@@ -61,12 +61,28 @@ function SimpleFloatingEdge({ id, source, target, markerEnd, style }) {
 </marker>
 
  
-<marker id="v-2-242226827" orient="auto" overflow="visible"  markerHeight="7" markerWidth="100" markerUnits="userSpaceOnUse">
- {/* <path d=" M55,0 L55,7" stroke="black" fill="none" />  */}
+{/* <marker id="v-2-242226827" orient="auto" overflow="visible"  markerHeight="7" markerWidth="10" markerUnits="userSpaceOnUse">
+ 
 
-  <path id="v-304" stroke="white" fill="none"  transform="rotate(180)" stroke-width="1.6" d="M15 0 l -20 7.5 l 19.85 -7.5 l -19.85 -7.5 l 20 7.5 M15,-7 L15,7"></path>
-  </marker> 
+  <path id="v-304" stroke="white" fill="none"  transform="rotate(90)" stroke-width="1"  d="M15 0 l -20 7.5 l 19.85 -7.5 l -19.85 -7.5 l 20 7.5 M15,-7 L15,7"></path>
 
+ 
+  </marker>  */}
+
+
+ <marker id="v-2-242226827" orient="auto" overflow="visible" markerHeight="7" markerWidth="10" markerUnits="userSpaceOnUse" refX="2.5" refY="1">
+  
+  <path transform='rotate(90)'
+        d="M 8,-2 L1,5 L-6,-2"
+        fill="none"
+        stroke="white"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+       
+      />
+</marker>
+ 
 
 
 
@@ -113,17 +129,18 @@ function SimpleFloatingEdge({ id, source, target, markerEnd, style }) {
       style={style}
     />
    
-   <g transform={`translate(${midX}, ${midY})`}>
-  <circle r="8" fill="none" stroke="white" strokeWidth="1" />
+   {/* <g transform={`translate(${midX}, ${midY})`}>
+  <circle r="6" fill="none" stroke="white" strokeWidth="1"/>
   <path transform={`rotate(${chevronRotation})`}
         d="M-3,-2 L0,2 L3,-2"
         fill="none"
         stroke="white"
-        strokeWidth="1.5"
+        strokeWidth="1"
         strokeLinecap="round"
         strokeLinejoin="round"
+       
       />
-</g>
+</g> */}
    
 
       
@@ -134,4 +151,6 @@ function SimpleFloatingEdge({ id, source, target, markerEnd, style }) {
 }
 
 export default SimpleFloatingEdge;
+
+
 

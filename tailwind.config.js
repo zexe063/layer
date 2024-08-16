@@ -7,6 +7,7 @@ module.exports = {
         'Dam-sans':['DM Sans', 'sans-serif'],
         'Inter':["Inter", 'sans-serif'],
         'Open-Sans':["Open Sans", 'sans-serif'],
+        'firo-mono' :["Fira Mono", 'monospace']
       },
       colors:{
         grey_0:"#FFFFFF",
@@ -28,7 +29,16 @@ module.exports = {
          border_color:"#2d2f38",
          overlfow_color:"#24262d",
          input_text_color:"#d3d6da",
-         nodeElementpopup: "rgb(55, 52, 73)"
+         nodeElementpopup: "rgb(55, 52, 73)",
+         skelton_color : "#eee",
+         string_color :"#5090ff",
+         number_color:"#cbb202;",
+         Array_color:"#6ed3c6",
+         date_color:"#18d1f1",
+        Objectid_color:"#fd7916",
+        undefined_color:"#ff5068",
+        Null_color:"#5090ff",
+        date_color:"#ffcd00"
      
          
          
